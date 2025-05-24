@@ -64,4 +64,28 @@ describe('Todo.vue', () => {
 })
 
 
+Initial Failing Test:
+
+it('adds a new todo when Enter is pressed with valid input', async () => {
+  const input = wrapper.find('input')
+  await input.trigger('keydown.enter') // Forgot to set value first
+  
+  expect(wrapper.vm.todos.length).toBe(1) // Fails here
+})
+
+
+Fixed Version: 
+
+it('adds a new todo when Enter is pressed with valid input', async () => {
+  const input = wrapper.find('input')
+  await input.setValue('New todo item') // Added this line
+  await input.trigger('keydown.enter')
+
+  expect(wrapper.vm.todos.length).toBe(1) // Now passes
+})
+
+
+
+
+
 
