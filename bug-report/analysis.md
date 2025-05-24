@@ -30,7 +30,7 @@ The bug report describes a race condition where:
 ## Recommended Fixes
 
 ### Immediate Solution (Bugfix)
-
+```
 function addTodo() {
   if (!newTodo.value.trim()) {
     error.value = 'Todo cannot be empty'
@@ -48,11 +48,11 @@ function addTodo() {
   newTodo.value = ''
   error.value = ''
 }
-
+```
 
 ### Robust Solution (Production-grade)
 1. **Debounced Input Handler**:
-
+```
 import { debounce } from 'lodash-es'
 
 const addTodo = debounce(() => {
@@ -61,17 +61,19 @@ const addTodo = debounce(() => {
 ```
 
 2. **Prevent Duplicate Text**:
-```javascript
+
+```
 if (todos.value.some(t => t.text === newTodo.value.trim())) {
   error.value = 'Todo already exists'
   return
 }
-
+```
 
 ## Regression Prevention Strategy
 
 1. **Unit Tests**:
 
+```
 describe('Duplicate Prevention', () => {
   it('generates unique IDs for rapid submissions', async () => {
     const wrapper = mount(Todo)
@@ -83,10 +85,11 @@ describe('Duplicate Prevention', () => {
     expect(new Set(ids).size).toBe(2) // Unique IDs
   })
 })
-
+```
 
 2. **E2E Test**:
 
+```
 test('rapid entry creates no duplicates', async ({ page }) => {
   await page.fill('input', 'Critical bugfix')
   for (let i = 0; i < 5; i++) {
@@ -95,7 +98,7 @@ test('rapid entry creates no duplicates', async ({ page }) => {
   const items = await page.locator('li').count()
   expect(items).toBe(1) // Only one should exist
 })
-
+```
 
 3. **Monitoring**:
 - Add console warning when duplicate detection triggers
