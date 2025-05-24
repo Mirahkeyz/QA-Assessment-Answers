@@ -25,7 +25,7 @@
 
 - Dedicated test reporting dashboard if using services like GitHub Actions or CircleCI
 
-CI Integration
+# CI Integration
 
 1 **Pre-commit Hook**: Optional (could run smoke tests)
 
